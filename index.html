@@ -3,10 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>แกลเลอรีรูปภาพของฉัน - Wednesday Theme</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Sarabun:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>Nevermore Academy - Photo Gallery</title>
+    
+    <!-- ฟอนต์ Google Fonts สไตล์ Gothic & Elegance -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cinzel:wght@600;700&family=Sarabun:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet">
 
     <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #090510;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #8b5cf6, #ec4899);
+            border-radius: 5px;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -15,143 +29,256 @@
 
         body {
             font-family: 'Sarabun', sans-serif;
-            background: radial-gradient(circle at center, #1b112c, #0a0612, #000000);
+            background-color: #05020a;
             color: #d1d5db;
             min-height: 100vh;
-        }
-
-        /* ส่วนหัว */
-        header {
-            text-align: center;
-            padding: 60px 20px 30px;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
-        }
-
-        header h1 {
-            font-family: 'Cinzel', serif;
-            font-size: 40px;
-            color: #bd93f9;
-            letter-spacing: 2px;
-            text-shadow: 0 0 12px rgba(189, 147, 249, 0.4);
-            margin-bottom: 10px;
-        }
-
-        header p {
-            font-size: 16px;
-            color: #8b92a5;
-            font-style: italic;
-        }
-
-        /* แกลเลอรี */
-        .gallery {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 30px 20px;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-        }
-
-        /* การ์ดสไตล์กอทิก */
-        .card {
-            background: #120e1a;
-            border: 1px solid #2d2240;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
-            transition: all 0.4s ease;
+            overflow-x: hidden;
             position: relative;
         }
 
-        .card:hover {
-            transform: translateY(-8px);
-            border-color: #8b5cf6;
-            box-shadow: 0 12px 35px rgba(139, 92, 246, 0.25);
+        /* Background Effects (หมอกควันและแสงนีออนลอย) */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: 
+                radial-gradient(circle at 15% 20%, rgba(139, 92, 246, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 85% 80%, rgba(236, 72, 153, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(18, 12, 28, 0.8) 0%, #05020a 100%);
+            z-index: -2;
         }
 
-        /* รูปภาพ */
+        /* ส่วนหัว (Header) */
+        header {
+            text-align: center;
+            padding: 70px 20px 40px;
+            position: relative;
+        }
+
+        .header-title {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 45px;
+            background: linear-gradient(135deg, #c084fc, #a855f7, #e879f9);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 25px rgba(168, 85, 247, 0.5);
+            letter-spacing: 3px;
+            margin-bottom: 12px;
+            animation: pulseGlow 4s ease-in-out infinite alternate;
+        }
+
+        header p {
+            font-family: 'Cinzel', serif;
+            font-size: 16px;
+            color: #a78bfa;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            opacity: 0.85;
+        }
+
+        header::after {
+            content: "❖ ─── 🕷️ ─── ❖";
+            display: block;
+            margin-top: 20px;
+            color: #6b21a8;
+            font-size: 18px;
+            letter-spacing: 5px;
+        }
+
+        /* แกลเลอรี GRID */
+        .gallery {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 20px 60px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 35px;
+        }
+
+        /* การ์ดสไตล์กอทิก (Card Component) */
+        .card {
+            background: rgba(18, 12, 28, 0.75);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(139, 92, 246, 0.25);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8),
+                        inset 0 0 15px rgba(139, 92, 246, 0.05);
+            transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+            position: relative;
+        }
+
+        /* เส้นขอบนีออนวิ่งเมื่อ Hover */
+        .card::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            border-radius: 16px;
+            border: 2px solid transparent;
+            transition: all 0.5s ease;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .card:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(139, 92, 246, 0.3),
+                        0 0 20px rgba(139, 92, 246, 0.2);
+        }
+
+        .card:hover::before {
+            border-color: rgba(168, 85, 247, 0.6);
+        }
+
+        /* Container สำหรับรูปภาพ */
+        .img-container {
+            position: relative;
+            overflow: hidden;
+            height: 280px;
+        }
+
         .card img {
             width: 100%;
-            height: 260px;
+            height: 100%;
             object-fit: cover;
-            display: block;
-            filter: grayscale(20%) contrast(110%);
-            transition: transform 0.5s ease, filter 0.5s ease;
+            filter: grayscale(30%) contrast(115%) brightness(90%);
+            transition: transform 0.7s ease, filter 0.7s ease;
         }
 
         .card:hover img {
-            transform: scale(1.06);
-            filter: grayscale(0%) contrast(100%);
+            transform: scale(1.1);
+            filter: grayscale(0%) contrast(105%) brightness(100%);
         }
 
-        /* ข้อความ */
+        /* Overlay เงาดำตรงโคนภาพ */
+        .img-container::after {
+            content: "";
+            position: absolute;
+            bottom: 0; left: 0; width: 100%; height: 60%;
+            background: linear-gradient(to top, rgba(18, 12, 28, 1), transparent);
+        }
+
+        /* เนื้อหาข้อความ */
         .content {
-            padding: 22px;
-            background: linear-gradient(180deg, #120e1a 0%, #0d0a14 100%);
+            padding: 20px 25px 25px;
+            position: relative;
+            z-index: 1;
         }
 
         .content h2 {
             font-family: 'Cinzel', serif;
-            font-size: 22px;
-            color: #e2e8f0;
-            margin-bottom: 10px;
-            border-bottom: 1px solid #2d2240;
-            padding-bottom: 8px;
+            font-size: 24px;
+            color: #f3e8ff;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
 
-        /* ตกแต่งพิเศษสำหรับ Enid (คู่ปรับโทนพาสเทล) */
-        .card.enid-card {
-            border-color: #4a2040;
-        }
-        
-        .card.enid-card:hover {
-            border-color: #ff79c6;
-            box-shadow: 0 12px 35px rgba(255, 121, 198, 0.25);
-        }
-
-        .card.enid-card h2 {
-            color: #ff79c6;
+        .content h2::after {
+            content: "✦";
+            font-size: 14px;
+            color: #a855f7;
         }
 
         .content p {
-            font-size: 14px;
-            line-height: 1.7;
-            color: #94a3b8;
+            font-size: 14.5px;
+            line-height: 1.8;
+            color: #a1a1aa;
+            text-align: justify;
+            font-weight: 300;
         }
 
-        /* ส่วนท้าย */
+        /* ตกแต่งการ์ดโทน Enid (สีพาสเทลชมพู-ม่วง) */
+        .card.enid-card {
+            border-color: rgba(236, 72, 153, 0.3);
+        }
+
+        .card.enid-card:hover {
+            box-shadow: 0 20px 40px rgba(236, 72, 153, 0.35),
+                        0 0 20px rgba(236, 72, 153, 0.2);
+        }
+
+        .card.enid-card:hover::before {
+            border-color: rgba(244, 114, 182, 0.8);
+        }
+
+        .card.enid-card h2 {
+            color: #fbcfe8;
+        }
+
+        .card.enid-card h2::after {
+            color: #ec4899;
+            content: "★";
+        }
+
+        /* ตกแต่งการ์ด Agnes (สีส้มอิฐ-ม่วง) */
+        .card.agnes-card {
+            border-color: rgba(249, 115, 22, 0.3);
+        }
+
+        .card.agnes-card:hover {
+            box-shadow: 0 20px 40px rgba(249, 115, 22, 0.3),
+                        0 0 20px rgba(249, 115, 22, 0.15);
+        }
+
+        .card.agnes-card:hover::before {
+            border-color: rgba(251, 146, 60, 0.7);
+        }
+
+        .card.agnes-card h2 {
+            color: #ffedd5;
+        }
+
+        .card.agnes-card h2::after {
+            color: #f97316;
+            content: "☕";
+        }
+
+        /* Footer */
         footer {
             text-align: center;
-            padding: 30px 20px;
-            margin-top: 50px;
-            background: #07040d;
-            border-top: 1px solid #1f172e;
-            color: #64748b;
+            padding: 40px 20px;
+            background: rgba(5, 2, 10, 0.95);
+            border-top: 1px solid rgba(139, 92, 246, 0.15);
+            color: #6b7280;
             font-size: 14px;
+            letter-spacing: 1px;
         }
 
         footer p {
-            margin: 4px 0;
+            margin: 6px 0;
+        }
+
+        footer .highlight {
+            color: #c084fc;
+        }
+
+        /* Keyframe Animations */
+        @keyframes pulseGlow {
+            0% { filter: drop-shadow(0 0 10px rgba(168, 85, 247, 0.4)); }
+            100% { filter: drop-shadow(0 0 22px rgba(236, 72, 153, 0.7)); }
         }
 
         /* Responsive Design */
-        @media (max-width: 900px) {
+        @media (max-width: 960px) {
             .gallery {
                 grid-template-columns: repeat(2, 1fr);
+                gap: 25px;
             }
         }
 
-        @media (max-width: 600px) {
-            header h1 {
-                font-size: 30px;
+        @media (max-width: 640px) {
+            .header-title {
+                font-size: 32px;
             }
 
             .gallery {
                 grid-template-columns: 1fr;
             }
 
-            .card img {
-                height: 240px;
+            .img-container {
+                height: 250px;
             }
         }
     </style>
@@ -159,48 +286,60 @@
 
 <body>
 
+    <!-- ส่วนหัว -->
     <header>
-        <h1>🕷️ แกลเลอรีรูปภาพของฉัน</h1>
-        <p>ยินดีต้อนรับสู่ Nevermore Academy — รวม 3 ภาพโปรด</p>
+        <h1 class="header-title">NEVERMORE GALLERY</h1>
+        <p>สถาบันคนนอก & สิ่งมีชีวิตสุดลึกลับ</p>
     </header>
 
+    <!-- แกลเลอรีรูปภาพ -->
     <section class="gallery">
 
+        <!-- รูปที่ 1: Wednesday -->
         <div class="card">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSP0l7Nbt4lD6-jtYlOAuhiRYMwGxgxXPeTRCeASjZVbw&s=10" alt="Wednesday Addams">
+            <div class="img-container">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSP0l7Nbt4lD6-jtYlOAuhiRYMwGxgxXPeTRCeASjZVbw&s=10" alt="Wednesday Addams">
+            </div>
             <div class="content">
                 <h2>Wednesday</h2>
                 <p>
-                   เด็กสาวสุดลึกลับ เย็นชา และฉลาดเฉลียว ผู้มาพร้อมกับรังสีความมืดมนอันเป็นเอกลักษณ์ เธอเป็นนักเขียนนิยายสยองขวัญ เล่นเชลโลได้อย่างไพเราะน่าขนลุก และมีความสามารถพิเศษในการเห็นนิมิตจากอดีตและอนาคต หลังจากก่อเรื่องในโรงเรียนเก่า เธอถูกส่งมายัง Nevermore Academy สถาบันสำหรับเหล่าคนนอก (Outcasts) ที่ซึ่งเธอต้องรับมือกับความสัมพันธ์อันซับซ้อนของผู้คน พร้อมทั้งใช้สัญชาตญาณอันเฉียบแหลมตามสืบไขปริศนาคดีฆาตกรรมสะเทือนขวัญที่ผูกพันกับอดีตของครอบครัวเธอำ
+                    เด็กสาวสุดลึกลับ เย็นชา และฉลาดเฉลียว ผู้มาพร้อมกับรังสีความมืดมนอันเป็นเอกลักษณ์ เธอเป็นนักเขียนนิยายสยองขวัญ เล่นเชลโลได้อย่างไพเราะน่าขนลุก และมีความสามารถพิเศษในการเห็นนิมิตจากอดีตและอนาคต
                 </p>
             </div>
         </div>
 
+        <!-- รูปที่ 2: Enid Sinclair -->
         <div class="card enid-card">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTL8gRPscKOZ6fuwzLPczWAyx59n2c7aH3RreAPy00fMA&s=10" alt="Enid Sinclair">
+            <div class="img-container">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTL8gRPscKOZ6fuwzLPczWAyx59n2c7aH3RreAPy00fMA&s=10" alt="Enid Sinclair">
+            </div>
             <div class="content">
                 <h2>Enid Sinclair</h2>
                 <p>
-                   รูมเมตมนุษย์หมาป่าสายพันธุ์ผสม ผู้เปรียบเสมือนขั้วตรงข้ามของเวนส์เดย์อย่างสิ้นเชิง เธอเป็นคนร่าเริง แจ่มใส มองโลกในแง่ดี และหลงใหลในสีสันโทนพาสเทล แฟชั่น ตลอดจนข่าวเม้าท์ในโรงเรียน แม้ว่าเธอจะมีปัญหาเรื่องการแปลงร่างเป็นหมาป่าไม่ได้สมบูรณ์แบบจนถูกครอบครัวบีบคั้น แต่ด้วยหัวใจที่เข้มแข็ง ความรักเพื่อน และความจงรักภักดี ทำให้เธอพร้อมที่จะปกป้องเวนส์เดย์ในยามวิกฤตเสมอ จนกลายมาเป็นมิตรภาพที่แน่นแฟ้นและลงตัวที่สุด
+                    รูมเมตมนุษย์หมาป่าสายพันธุ์ผสม ผู้เปรียบเสมือนขั้วตรงข้ามของเวนส์เดย์อย่างสิ้นเชิง เธอเป็นคนร่าเริง แจ่มใส มองโลกในแง่ดี และหลงใหลในสีสันโทนพาสเทล แฟชั่น ตลอดจนข่าวเม้าท์ในโรงเรียน
                 </p>
             </div>
         </div>
 
-        <div class="card">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ78bK8jyvdcD9tevgEyLl-DRR8BK44KjLeyHLSKRjq6A&s=10" alt="Agnes DeMille">
+        <!-- รูปที่ 3: Agnes DeMille -->
+        <div class="card agnes-card">
+            <div class="img-container">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ78bK8jyvdcD9tevgEyLl-DRR8BK44KjLeyHLSKRjq6A&s=10" alt="Agnes DeMille">
+            </div>
             <div class="content">
                 <h2>Agnes DeMille</h2>
                 <p>
-                   นักเรียนสาวแห่ง Nevermore Academy ผู้โดดเด่นด้วยทรงผมเปียคู่สีส้มแดงและหน้าผากปาดเต๋าสไตล์เฉพาะตัว เธอเป็นตัวละครที่มีเสน่ห์น่ารัก ขี้เล่น และชื่นชอบการทานขนมหวานรวมถึงเครื่องดื่มวิปครีมล้นแก้วเป็นชีวิตจิตใจ แม้ภายนอกดูเหมือนเด็กสาวธรรมดาในชุดยูนิฟอร์มสีม่วง-ดำของสถาบัน แต่เธอก็เป็นอีกหนึ่งสีสันสำคัญที่เข้ามาเติมเต็มบรรยากาศความป่วนและความวุ่นวายภายในรั้วโรงเรียนแห่งนี้
+                    นักเรียนสาวแห่ง Nevermore Academy ผู้โดดเด่นด้วยทรงผมเปียคู่สีส้มแดงและหน้าผากปาดเต๋าสไตล์เฉพาะตัว เธอเป็นตัวละครที่มีเสน่ห์น่ารัก ขี้เล่น และชื่นชอบการทานขนมหวานเป็นชีวิตจิตใจ
                 </p>
             </div>
         </div>
 
     </section>
 
+    <!-- ส่วนท้าย -->
     <footer>
-        <p>© 2026 แกลเลอรีรูปภาพของฉัน</p>
-        <p>สร้างสรรค์ jPEEM</p>
+        <p>© 2026 <span class="highlight">Nevermore Academy Gallery</span>. All Rights Reserved.</p>
+        <p>สร้างสรรค์โดยนักเรียน 🕷️</p>
     </footer>
 
 </body>
